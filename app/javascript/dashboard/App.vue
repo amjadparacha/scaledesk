@@ -19,6 +19,7 @@ import {
 } from './helper/pushHelper';
 import ReconnectService from 'dashboard/helper/ReconnectService';
 import { useUISettings } from 'dashboard/composables/useUISettings';
+import Modal from './components/Modal.vue';
 
 export default {
   name: 'App',
@@ -51,6 +52,8 @@ export default {
     return {
       latestChatwootVersion: null,
       reconnectService: null,
+      validityDays: 0,
+      isDemoExpired: false,
     };
   },
   computed: {
@@ -83,6 +86,7 @@ export default {
     this.setLocale(
       this.uiSettings?.locale || window.chatwootConfig.selectedLocale
     );
+    this.checkValidity();
   },
   unmounted() {
     if (this.reconnectService) {
@@ -99,6 +103,18 @@ export default {
     },
     setLocale(locale) {
       this.$root.$i18n.locale = locale;
+    },
+    async checkValidity() {
+      let licenseData = await this.$store.dispatch('auth/getLicenseData');
+      const expiryDate = new Date(licenseData.valid_until);
+      const currentDate = new Date();
+
+      const differenceInDays = Math.ceil((expiryDate - currentDate) / (1000 * 60 * 60 * 24));
+      if (differenceInDays > 0) {
+        this.validityDays = differenceInDays;
+      } else {
+        this.isDemoExpired = true;
+      }
     },
     async initializeAccount() {
       await this.$store.dispatch('accounts/get');
@@ -128,6 +144,7 @@ export default {
 </script>
 
 <template>
+  <div v-if="validityDays" class="flex gap-4 h-8 items-center justify-center px-4 py-3 text-xs">DEMO WILL EXPIRE IN {{validityDays}} DAYS</div>
   <div
     v-if="!authUIFlags.isFetching && !accountUIFlags.isFetchingItem"
     id="app"
@@ -148,6 +165,17 @@ export default {
     <NetworkNotification />
   </div>
   <LoadingState v-else />
+
+  <Modal v-model:show="isDemoExpired" :showCloseButton="false" :closeOnBackdropClick="false" :fullWidth=true>
+    <div class="h-auto overflow-auto flex flex-col">
+      <div class="flex flex-row justify-end gap-2 py-4 px-6 w-full">
+          Demo Expired
+      </div>
+      <div class="flex flex-row justify-end gap-2 py-4 px-6 w-full">
+          Contact Administrator
+      </div>
+    </div>
+  </Modal>
 </template>
 
 <style lang="scss">
