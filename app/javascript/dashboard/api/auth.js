@@ -38,6 +38,9 @@ export default {
     }
     return false;
   },
+  getLicenseData() {
+    return axios.get('/assets/license.json');
+  },
   profileUpdate({ displayName, avatar, ...profileAttributes }) {
     const formData = new FormData();
     Object.keys(profileAttributes).forEach(key => {

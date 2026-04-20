@@ -19,6 +19,8 @@ import {
 } from './helper/pushHelper';
 import ReconnectService from 'dashboard/helper/ReconnectService';
 import { useUISettings } from 'dashboard/composables/useUISettings';
+import Modal from './components/Modal.vue';
+import { getLicenseData } from 'dashboard/api/auth'
 
 export default {
   name: 'App',
@@ -30,6 +32,7 @@ export default {
     PaymentPendingBanner,
     WootSnackbarBox,
     PendingEmailVerificationBanner,
+    Modal,
   },
   setup() {
     const router = useRouter();
@@ -51,6 +54,8 @@ export default {
     return {
       latestChatwootVersion: null,
       reconnectService: null,
+      validityDays: 0,
+      isDemoExpired: false,
     };
   },
   computed: {
@@ -83,6 +88,7 @@ export default {
     this.setLocale(
       this.uiSettings?.locale || window.chatwootConfig.selectedLocale
     );
+    this.checkValidity();
   },
   unmounted() {
     if (this.reconnectService) {
@@ -99,6 +105,18 @@ export default {
     },
     setLocale(locale) {
       this.$root.$i18n.locale = locale;
+    },
+    async checkValidity() {
+      let licenseData = await this.$store.dispatch('auth/getLicenseData');
+      const expiryDate = new Date('2026-04-21');
+      const currentDate = new Date();
+
+      const differenceInDays = Math.ceil((expiryDate - currentDate) / (1000 * 60 * 60 * 24));
+      if (differenceInDays > 0) {
+        this.validityDays = differenceInDays;
+      } else {
+        this.isDemoExpired = true;
+      }
     },
     async initializeAccount() {
       await this.$store.dispatch('accounts/get');
@@ -128,6 +146,7 @@ export default {
 </script>
 
 <template>
+  <div class="flex gap-4 h-8 items-center justify-center px-4 py-3 text-base" style="background: aquamarine;">DEMO WILL EXPIRE IN {{validityDays}} DAYS! Don't lose access to your data. Contact PI Solutions & Consulting!</div>
   <div
     v-if="!authUIFlags.isFetching && !accountUIFlags.isFetchingItem"
     id="app"
@@ -148,6 +167,12 @@ export default {
     <NetworkNotification />
   </div>
   <LoadingState v-else />
+  <Modal v-model:show="isDemoExpired" :showCloseButton="false" :closeOnBackdropClick="false" :fullWidth=true>
+    <div class="h-full overflow-auto flex flex-col items-center justify-center gap-4 py-4 px-6">
+      <h2 class="text-xl font-semibold text-n-slate-12">Demo Expired</h2>
+      <p class="text-n-slate-11">Contact <a :href="'mailto:info@pisolglobal.com?subject=' + encodeURIComponent('Upgrade')">info@pisolglobal.com</a></p>
+    </div>
+  </Modal>
 </template>
 
 <style lang="scss">
