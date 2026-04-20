@@ -20,7 +20,7 @@ import {
 import ReconnectService from 'dashboard/helper/ReconnectService';
 import { useUISettings } from 'dashboard/composables/useUISettings';
 import Modal from './components/Modal.vue';
-import { getLicenseData } from 'dashboard/api/auth'
+import AuthAPI from 'dashboard/api/auth';
 
 export default {
   name: 'App',
@@ -107,14 +107,23 @@ export default {
       this.$root.$i18n.locale = locale;
     },
     async checkValidity() {
-      let licenseData = await this.$store.dispatch('auth/getLicenseData');
-      const expiryDate = new Date('2026-04-21');
-      const currentDate = new Date();
+      try {
+        const response = await AuthAPI.getLicenseData();
+        const licenseData = response.data;
+        
+        const expiryDate = new Date(licenseData.valid_until + 'T23:59:59');
+        console.log(expiryDate)
+        const currentDate = new Date();
 
-      const differenceInDays = Math.ceil((expiryDate - currentDate) / (1000 * 60 * 60 * 24));
-      if (differenceInDays > 0) {
-        this.validityDays = differenceInDays;
-      } else {
+        const differenceInDays = Math.ceil((expiryDate - currentDate) / (1000 * 60 * 60 * 24));
+        console.log(differenceInDays)
+        if (differenceInDays > 0) {
+          this.validityDays = differenceInDays;
+        } else {
+          this.isDemoExpired = true;
+        }
+      } catch (e) {
+        console.error('License check failed:', e);
         this.isDemoExpired = true;
       }
     },
@@ -146,7 +155,7 @@ export default {
 </script>
 
 <template>
-  <div class="flex gap-4 h-8 items-center justify-center px-4 py-3 text-base" style="background: aquamarine;">DEMO WILL EXPIRE IN {{validityDays}} DAYS! Don't lose access to your data. Contact PI Solutions & Consulting!</div>
+  <div class="flex gap-4 h-8 items-center justify-center px-4 py-3 text-xs" style="background: aquamarine;font-weight: bold;">DEMO WILL EXPIRE IN {{validityDays}} DAYS! Don't lose access to your data. Contact<a :href="'mailto:info@pisolglobal.com?subject=' + encodeURIComponent('Upgrade')">info@pisolglobal.com</a></div>
   <div
     v-if="!authUIFlags.isFetching && !accountUIFlags.isFetchingItem"
     id="app"
