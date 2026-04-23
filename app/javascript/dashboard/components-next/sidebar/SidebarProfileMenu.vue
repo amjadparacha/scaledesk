@@ -56,7 +56,7 @@ const menuItems = computed(() => {
       },
     },
     {
-      show: true,
+      show: false,
       showOnCustomBrandedInstance: true,
       label: t('SIDEBAR_ITEMS.KEYBOARD_SHORTCUTS'),
       icon: 'i-lucide-keyboard',
@@ -100,7 +100,7 @@ const menuItems = computed(() => {
       target: '_blank',
     },
     {
-      show: currentUser.value.type === 'SuperAdmin',
+      show: false,
       showOnCustomBrandedInstance: true,
       label: t('SIDEBAR_ITEMS.SUPER_ADMIN_CONSOLE'),
       icon: 'i-lucide-castle',
