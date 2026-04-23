@@ -155,13 +155,13 @@ export default {
 </script>
 
 <template>
-  <div class="flex gap-4 h-8 items-center justify-center px-4 py-3 text-xs" style="background: aquamarine;font-weight: bold;">DEMO WILL EXPIRE IN {{validityDays}} DAYS! Don't lose access to your data. Contact<a :href="'mailto:info@pisolglobal.com?subject=' + encodeURIComponent('Upgrade')">info@pisolglobal.com</a></div>
   <div
     v-if="!authUIFlags.isFetching && !accountUIFlags.isFetchingItem"
     id="app"
     class="flex flex-col w-full h-screen min-h-0 bg-n-background"
     :dir="isRTL ? 'rtl' : 'ltr'"
   >
+    <div class="flex items-center justify-center gap-1 w-full px-4 py-2 text-xs overflow-hidden" style="background: aquamarine;font-weight: bold;">DEMO WILL EXPIRE IN {{validityDays}} DAYS! Contact<a :href="'mailto:info@pisolglobal.com?subject=' + encodeURIComponent('Upgrade')">info@pisolglobal.com</a></div>
     <UpdateBanner :latest-chatwoot-version="latestChatwootVersion" />
     <template v-if="currentAccountId">
       <PendingEmailVerificationBanner v-if="hideOnOnboardingView" />
