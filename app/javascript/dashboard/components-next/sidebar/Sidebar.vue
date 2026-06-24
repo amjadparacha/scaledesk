@@ -315,7 +315,7 @@ const menuItems = computed(() => {
         },
       ],
     },
-    {
+    /* {
       name: 'Captain',
       icon: 'i-woot-captain',
       label: t('SIDEBAR.CAPTAIN'),
@@ -385,7 +385,7 @@ const menuItems = computed(() => {
           }),
         },
       ],
-    },
+    }, */
     {
       name: 'Contacts',
       label: t('SIDEBAR.CONTACTS'),
@@ -487,19 +487,19 @@ const menuItems = computed(() => {
           label: t('SIDEBAR.CSAT'),
           to: accountScopedRoute('csat_reports'),
         },
-        /*{
+        /* {
           name: 'Reports SLA',
           label: t('SIDEBAR.REPORTS_SLA'),
           to: accountScopedRoute('sla_reports'),
-        },*/
-        /*{
+        }, */
+        /* {
           name: 'Reports Bot',
           label: t('SIDEBAR.REPORTS_BOT'),
           to: accountScopedRoute('bot_reports'),
-        },*/
+        }, */
       ],
     },
-    /*{
+    /* {
       name: 'Campaigns',
       label: t('SIDEBAR.CAMPAIGNS'),
       icon: 'i-lucide-megaphone',
@@ -520,7 +520,7 @@ const menuItems = computed(() => {
           to: accountScopedRoute('campaigns_whatsapp_index'),
         },
       ],
-    },*/
+    }, */
     {
       name: 'Portals',
       label: t('SIDEBAR.HELP_CENTER.TITLE'),
@@ -652,43 +652,43 @@ const menuItems = computed(() => {
           icon: 'i-lucide-code',
           to: accountScopedRoute('attributes_list'),
         },
-        /*{
+        /* {
           name: 'Settings Automation',
           label: t('SIDEBAR.AUTOMATION'),
           icon: 'i-lucide-repeat',
           to: accountScopedRoute('automation_list'),
-        },*/
-        /*{
+        }, */
+        /* {
           name: 'Settings Agent Bots',
           label: t('SIDEBAR.AGENT_BOTS'),
           icon: 'i-lucide-bot',
           to: accountScopedRoute('agent_bots'),
-        },*/
-        /*{
+        }, */
+        /* {
           name: 'Settings Macros',
           label: t('SIDEBAR.MACROS'),
           icon: 'i-lucide-toy-brick',
           to: accountScopedRoute('macros_wrapper'),
-        },*/
+        }, */
         {
           name: 'Settings Canned Responses',
           label: t('SIDEBAR.CANNED_RESPONSES'),
           icon: 'i-lucide-message-square-quote',
           to: accountScopedRoute('canned_list'),
         },
-        /*{
+        /* {
           name: 'Settings Integrations',
           label: t('SIDEBAR.INTEGRATIONS'),
           icon: 'i-lucide-blocks',
           to: accountScopedRoute('settings_applications'),
-        },*/
-        {
+        }, */
+        /* {
           name: 'Settings Audit Logs',
           label: t('SIDEBAR.AUDIT_LOGS'),
           icon: 'i-lucide-briefcase',
           to: accountScopedRoute('auditlogs_list'),
-        },
-        /*{
+        }, */
+        /* {
           name: 'Settings Custom Roles',
           label: t('SIDEBAR.CUSTOM_ROLES'),
           icon: 'i-lucide-shield-plus',
@@ -699,25 +699,25 @@ const menuItems = computed(() => {
           label: t('SIDEBAR.SLA'),
           icon: 'i-lucide-clock-alert',
           to: accountScopedRoute('sla_list'),
-        },*/
-        /*{
+        }, */
+        /* {
           name: 'Conversation Workflow',
           label: t('SIDEBAR.CONVERSATION_WORKFLOW'),
           icon: 'i-lucide-workflow',
           to: accountScopedRoute('conversation_workflow_index'),
-        },*/
-        /*{
+        }, */
+        /* {
           name: 'Settings Security',
           label: t('SIDEBAR.SECURITY'),
           icon: 'i-lucide-shield',
           to: accountScopedRoute('security_settings_index'),
-        },*/
-        /*{
+        }, */
+        /* {
           name: 'Settings Billing',
           label: t('SIDEBAR.BILLING'),
           icon: 'i-lucide-credit-card',
           to: accountScopedRoute('billing_settings_index'),
-        },*/
+        }, */
       ],
     },
   ];

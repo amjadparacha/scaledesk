@@ -1,0 +1,6 @@
+# give scaledesk user permission to start/stop/restart scaledesk systemd service
+
+%scaledesk ALL=NOPASSWD: /bin/systemctl start scaledesk.target
+%scaledesk ALL=NOPASSWD: /bin/systemctl stop scaledesk.target
+%scaledesk ALL=NOPASSWD: /bin/systemctl restart scaledesk.target
+%scaledesk ALL=NOPASSWD: /usr/local/bin/cwctl
