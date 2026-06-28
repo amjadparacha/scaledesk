@@ -161,7 +161,7 @@ export default {
     class="flex flex-col w-full h-screen min-h-0 bg-n-background"
     :dir="isRTL ? 'rtl' : 'ltr'"
   >
-    <div class="flex items-center justify-center gap-1 w-full px-4 py-2 text-xs overflow-hidden" style="background: aquamarine;font-weight: bold;">DEMO WILL EXPIRE IN {{validityDays}} DAYS! Contact<a :href="'mailto:info@pisolglobal.com?subject=' + encodeURIComponent('Upgrade')">info@pisolglobal.com</a></div>
+    <div class="flex items-center justify-center gap-1 w-full px-4 py-2 text-xs overflow-hidden" style="background: aquamarine;font-weight: bold;display: none;">DEMO WILL EXPIRE IN {{validityDays}} DAYS! Contact<a :href="'mailto:info@pisolglobal.com?subject=' + encodeURIComponent('Upgrade')">info@pisolglobal.com</a></div>
     <UpdateBanner :latest-chatwoot-version="latestChatwootVersion" />
     <template v-if="currentAccountId">
       <PendingEmailVerificationBanner v-if="hideOnOnboardingView" />
@@ -178,7 +178,7 @@ export default {
   <LoadingState v-else />
   <Modal v-model:show="isDemoExpired" :showCloseButton="false" :closeOnBackdropClick="false" :fullWidth=true>
     <div class="h-full overflow-auto flex flex-col items-center justify-center gap-4 py-4 px-6">
-      <h2 class="text-xl font-semibold text-n-slate-12">Demo Expired</h2>
+      <h2 class="text-xl font-semibold text-n-slate-12">License Expired</h2>
       <p class="text-n-slate-11">Contact <a :href="'mailto:info@pisolglobal.com?subject=' + encodeURIComponent('Upgrade')">info@pisolglobal.com</a></p>
     </div>
   </Modal>
